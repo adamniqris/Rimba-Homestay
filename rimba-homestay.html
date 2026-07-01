@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rimba Stay — Homestay in the Hills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --jungle:#1F3A2E;
+    --jungle-deep:#142720;
+    --sand:#EFE6D2;
+    --indigo:#2C4A5E;
+    --gold:#C9A227;
+    --paper:#FAF7F0;
+    --ink:#2A2622;
+    --ink-soft:#5B564C;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.1;
+  }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  /* ---------- Batik-inspired signature motif (SVG pattern) ---------- */
+  .motif-strip{
+    height:14px;
+    width:100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'%3E%3Cpath d='M0 7 Q7 0 14 7 T28 7 T42 7 T56 7' fill='none' stroke='%23C9A227' stroke-width='1.4'/%3E%3Ccircle cx='7' cy='7' r='1.4' fill='%23C9A227'/%3E%3Ccircle cx='21' cy='7' r='1.4' fill='%23C9A227'/%3E%3Ccircle cx='35' cy='7' r='1.4' fill='%23C9A227'/%3E%3Ccircle cx='49' cy='7' r='1.4' fill='%23C9A227'/%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-size:56px 14px;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    background:var(--paper);
+    border-bottom:1px solid rgba(42,38,34,0.08);
+    position:sticky;
+    top:0;
+    z-index:20;
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size:1.35rem;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .logo span{ color:var(--gold); }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:0.92rem;
+  }
+  .nav-links a{
+    opacity:0.85;
+    transition:opacity 0.2s ease;
+  }
+  .nav-links a:hover{ opacity:1; color:var(--indigo); }
+  .btn{
+    display:inline-block;
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    padding:12px 24px;
+    border-radius:2px;
+    transition:transform 0.15s ease, background 0.2s ease;
+  }
+  .btn-primary{
+    background:var(--jungle);
+    color:var(--paper);
+  }
+  .btn-primary:hover{ background:var(--jungle-deep); transform:translateY(-1px); }
+  .btn-ghost{
+    border:1px solid var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--jungle);
+    color:var(--sand);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+    padding-top:96px;
+    padding-bottom:96px;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    color:var(--paper);
+    margin:18px 0 22px;
+  }
+  .hero p.lead{
+    font-size:1.08rem;
+    color:rgba(250,247,240,0.82);
+    max-width:44ch;
+    margin-bottom:32px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
+  .hero-ctas .btn-ghost{
+    border-color:rgba(250,247,240,0.5);
+    color:var(--paper);
+  }
+  .hero-ctas .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+  .hero-card{
+    background:var(--indigo);
+    border-radius:6px;
+    padding:28px;
+    position:relative;
+  }
+  .hero-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border:1px solid rgba(201,162,39,0.35);
+    border-radius:6px;
+    margin:8px;
+    pointer-events:none;
+  }
+  .hero-card h3{
+    color:var(--paper);
+    font-size:1.1rem;
+    margin-bottom:6px;
+  }
+  .hero-card .rate{
+    font-family:'Space Mono', monospace;
+    color:var(--gold);
+    font-size:1.9rem;
+    margin:14px 0 4px;
+  }
+  .hero-card .rate small{
+    font-size:0.9rem;
+    color:rgba(250,247,240,0.7);
+    font-family:'Work Sans', sans-serif;
+  }
+  .hero-card ul{
+    list-style:none;
+    margin-top:18px;
+    color:rgba(250,247,240,0.85);
+    font-size:0.92rem;
+  }
+  .hero-card li{
+    padding:7px 0;
+    border-top:1px dashed rgba(250,247,240,0.18);
+  }
+  .hero-card li:first-child{ border-top:none; }
+
+  /* ---------- Story ---------- */
+  .story{
+    padding:96px 0;
+  }
+  .story .wrap{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+    align-items:start;
+  }
+  .story h2{
+    font-size:clamp(1.8rem, 3vw, 2.4rem);
+    margin:12px 0 20px;
+  }
+  .story p{ color:var(--ink-soft); margin-bottom:16px; max-width:56ch; }
+  .story-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:32px;
+  }
+  .story-stats div{
+    border-top:1px solid rgba(42,38,34,0.15);
+    padding-top:12px;
+  }
+  .story-stats strong{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:1.7rem;
+    color:var(--jungle);
+  }
+  .story-stats span{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Rooms ---------- */
+  .rooms{
+    background:var(--sand);
+    padding:96px 0;
+  }
+  .section-head{
+    max-width:56ch;
+    margin-bottom:48px;
+  }
+  .section-head h2{
+    font-size:clamp(1.8rem, 3vw, 2.4rem);
+    margin-top:10px;
+  }
+  .room-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .room-card{
+    background:var(--paper);
+    border-radius:4px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .room-photo{
+    height:170px;
+    background:linear-gradient(135deg, var(--jungle) 0%, var(--indigo) 100%);
+    position:relative;
+  }
+  .room-photo span{
+    position:absolute;
+    bottom:12px;
+    left:16px;
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    color:var(--sand);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .room-body{ padding:22px; flex:1; display:flex; flex-direction:column; }
+  .room-body h3{ font-size:1.2rem; margin-bottom:8px; }
+  .room-body p{ color:var(--ink-soft); font-size:0.92rem; flex:1; margin-bottom:16px; }
+  .room-price{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-top:1px solid rgba(42,38,34,0.1);
+    padding-top:14px;
+  }
+  .room-price .amount{
+    font-family:'Space Mono', monospace;
+    color:var(--jungle);
+    font-size:1.15rem;
+  }
+  .room-price .amount small{ color:var(--ink-soft); font-size:0.78rem; }
+
+  @media (max-width:900px){
+    .room-grid{ grid-template-columns:1fr; }
+    .hero .wrap, .story .wrap{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Amenities ---------- */
+  .amenities{ padding:96px 0; }
+  .amenity-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:32px;
+  }
+  .amenity{ text-align:left; }
+  .amenity .mark{
+    width:38px; height:38px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold);
+    font-family:'Fraunces', serif;
+    font-size:1rem;
+    margin-bottom:14px;
+  }
+  .amenity h3{ font-size:1rem; margin-bottom:6px; }
+  .amenity p{ color:var(--ink-soft); font-size:0.88rem; }
+
+  @media (max-width:760px){
+    .amenity-grid{ grid-template-columns:1fr 1fr; }
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{
+    background:var(--jungle-deep);
+    color:var(--sand);
+    padding:96px 0;
+  }
+  .testimonials .section-head h2{ color:var(--paper); }
+  .testimonials .eyebrow{ color:var(--gold); }
+  .quote-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  .quote{
+    background:rgba(250,247,240,0.05);
+    border-left:2px solid var(--gold);
+    padding:22px 24px;
+  }
+  .quote p{ font-family:'Fraunces', serif; font-size:1.05rem; margin-bottom:16px; color:var(--paper); }
+  .quote cite{ font-style:normal; font-size:0.82rem; color:rgba(250,247,240,0.6); }
+
+  @media (max-width:900px){
+    .quote-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Booking / Location ---------- */
+  .booking{ padding:96px 0; }
+  .booking .wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+    align-items:center;
+  }
+  .booking h2{ font-size:clamp(1.8rem, 3vw, 2.4rem); margin:12px 0 18px; }
+  .booking p{ color:var(--ink-soft); margin-bottom:28px; max-width:48ch; }
+  .info-list{ list-style:none; }
+  .info-list li{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-top:1px solid rgba(42,38,34,0.12);
+    font-size:0.94rem;
+  }
+  .info-list li:last-child{ border-bottom:1px solid rgba(42,38,34,0.12); }
+  .info-list span:first-child{ color:var(--ink-soft); }
+  .info-list span:last-child{ font-weight:600; }
+
+  .map-block{
+    background:var(--indigo);
+    border-radius:6px;
+    height:100%;
+    min-height:280px;
+    display:flex;
+    align-items:flex-end;
+    padding:24px;
+    color:var(--paper);
+    position:relative;
+  }
+  .map-block::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(201,162,39,0.25), transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(201,162,39,0.18), transparent 45%);
+    border-radius:6px;
+  }
+  .map-block strong{
+    font-family:'Fraunces', serif;
+    font-size:1.1rem;
+    position:relative;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--ink);
+    color:rgba(250,247,240,0.75);
+    padding:56px 0 32px;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    padding-bottom:32px;
+  }
+  footer .logo{ color:var(--paper); }
+  .foot-links{ display:flex; gap:28px; font-size:0.88rem; }
+  .foot-links a:hover{ color:var(--gold); }
+  .foot-bottom{
+    border-top:1px solid rgba(250,247,240,0.12);
+    padding-top:20px;
+    font-size:0.8rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    color:rgba(250,247,240,0.5);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">rimba<span>.</span>stay</div>
+    <div class="nav-links">
+      <a href="#story">Our story</a>
+      <a href="#rooms">Stays</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#booking">Location</a>
+    </div>
+    <a href="#booking" class="btn btn-primary">Check availability</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">A wooden kampung house, restored</p>
+      <h1>Wake up to birdsong, not alarms.</h1>
+      <p class="lead">Rimba Stay sits at the edge of the forest reserve, a short drive from Kajang — three rooms, a shared kitchen that smells of pandan, and a verandah built for doing nothing at all.</p>
+      <div class="hero-ctas">
+        <a href="#rooms" class="btn btn-primary">See the rooms</a>
+        <a href="#booking" class="btn btn-ghost">Get directions</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <p class="eyebrow" style="color:var(--gold)">Tonight's rate</p>
+      <h3>Whole-house stay</h3>
+      <div class="rate">RM 320 <small>/ night</small></div>
+      <ul>
+        <li>Sleeps up to 6 guests</li>
+        <li>Check-in from 2:00 pm</li>
+        <li>Check-out by 12:00 pm</li>
+        <li>Free parking for 2 cars</li>
+      </ul>
+    </div>
+  </div>
+  <div class="motif-strip"></div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Since 2016</p>
+      <h2>Built by the Rahman family, still run by them.</h2>
+    </div>
+    <div>
+      <p>The house was Pak Rahman's grandfather's — teak floors, a zinc roof that sings when it rains, and a garden that's mostly durian and pucuk ubi. When the family stopped farming full-time, they opened three of its rooms to travellers instead of selling the land.</p>
+      <p>Everything here is still run the way it always was: breakfast is whatever's in season, the WiFi password is written on a coconut shell by the door, and Pak Rahman will happily point you to the waterfall trail if you ask.</p>
+      <div class="story-stats">
+        <div><strong>9 yrs</strong><span>Hosting guests on this land</span></div>
+        <div><strong>3</strong><span>Rooms, plus the whole house</span></div>
+        <div><strong>4.9</strong><span>Average guest rating</span></div>
+        <div><strong>40 min</strong><span>From Kajang town centre</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rooms" id="rooms">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Where to sleep</p>
+      <h2>Three rooms, one verandah for all of them.</h2>
+    </div>
+    <div class="room-grid">
+      <div class="room-card">
+        <div class="room-photo"><span>Garden Room</span></div>
+        <div class="room-body">
+          <h3>Garden Room</h3>
+          <p>A queen bed facing the durian trees, with a writing desk and slow ceiling fan. Good for one or two.</p>
+          <div class="room-price">
+            <span>Sleeps 2</span>
+            <span class="amount">RM 95 <small>/ night</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-photo"><span>Loft Room</span></div>
+        <div class="room-body">
+          <h3>Loft Room</h3>
+          <p>Tucked under the roofline with its own reading nook. Bring a book — the zinc roof is loud when it rains.</p>
+          <div class="room-price">
+            <span>Sleeps 2</span>
+            <span class="amount">RM 85 <small>/ night</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-photo"><span>Family Room</span></div>
+        <div class="room-body">
+          <h3>Family Room</h3>
+          <p>Two double beds and a daybed by the window, big enough for a small family or a group of friends.</p>
+          <div class="room-price">
+            <span>Sleeps 4</span>
+            <span class="amount">RM 150 <small>/ night</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="amenities" id="amenities">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">What's included</p>
+      <h2>Simple comforts, taken care of.</h2>
+    </div>
+    <div class="amenity-grid">
+      <div class="amenity">
+        <div class="mark">K</div>
+        <h3>Shared kitchen</h3>
+        <p>Cook your own or join the family for breakfast.</p>
+      </div>
+      <div class="amenity">
+        <div class="mark">W</div>
+        <h3>Free WiFi</h3>
+        <p>Steady enough for a video call on the verandah.</p>
+      </div>
+      <div class="amenity">
+        <div class="mark">P</div>
+        <h3>Free parking</h3>
+        <p>Space for up to four cars in the front yard.</p>
+      </div>
+      <div class="amenity">
+        <div class="mark">G</div>
+        <h3>Garden & hammocks</h3>
+        <p>Durian trees, a swing, and nowhere to be.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">From past guests</p>
+      <h2>What people remember about staying here.</h2>
+    </div>
+    <div class="quote-grid">
+      <div class="quote">
+        <p>Pak Rahman walked us to the waterfall himself and wouldn't take extra payment for it. That's the kind of place this is.</p>
+        <cite>— Sarah, Petaling Jaya</cite>
+      </div>
+      <div class="quote">
+        <p>Breakfast changed every day depending on what was in the garden. Best nasi lemak I've had outside my grandmother's kitchen.</p>
+        <cite>— Haziq, Seremban</cite>
+      </div>
+      <div class="quote">
+        <p>Quiet enough to actually hear the rain. We came for one night and stayed three.</p>
+        <cite>— Mei Ling, Kuala Lumpur</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Find us</p>
+      <h2>Forty minutes from Kajang, at the edge of the reserve.</h2>
+      <p>Send a WhatsApp message with your dates and the family will confirm availability directly — no booking fees, no middleman.</p>
+      <ul class="info-list">
+        <li><span>Address</span><span>Jalan Rimba 3, Hulu Langat, Selangor</span></li>
+        <li><span>Check-in</span><span>2:00 pm – 8:00 pm</span></li>
+        <li><span>Check-out</span><span>By 12:00 pm</span></li>
+        <li><span>Contact</span><span>+60 12-345 6789</span></li>
+      </ul>
+      <a href="#" class="btn btn-primary" style="margin-top:24px;">Message us on WhatsApp</a>
+    </div>
+    <div class="map-block">
+      <strong>Jalan Rimba 3, Hulu Langat<br>Selangor, Malaysia</strong>
+    </div>
+  </div>
+</section>
+
+<div class="motif-strip"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">rimba<span style="color:var(--gold)">.</span>stay</div>
+    <div class="foot-links">
+      <a href="#story">Our story</a>
+      <a href="#rooms">Stays</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#booking">Location</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Rimba Stay. Run by the Rahman family.</span>
+    <span>Hulu Langat, Selangor, Malaysia</span>
+  </div>
+</footer>
+
+</body>
+</html>
